@@ -3,13 +3,13 @@ package main
 import "github.com/yoctoMNS/soft_engine/core"
 
 func main() {
-	core.GetInstance().Init()
+	core.GetEngineInstance().Init()
 
-	for core.GetInstance().IsRunning() {
-		core.GetInstance().Events()
-		core.GetInstance().Update()
-		core.GetInstance().Render()
+	for core.GetEngineInstance().IsRunning() {
+		core.GetEngineInstance().Events()
+		core.GetEngineInstance().Update()
+		core.GetEngineInstance().Render()
 	}
 
-	core.GetInstance().Clean()
+	core.GetEngineInstance().Clean()
 }

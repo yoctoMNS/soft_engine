@@ -19,7 +19,7 @@ type engine struct {
 }
 
 func (e *engine) Init() bool {
-	if err := sdl.Init(sdl.INIT_VIDEO); err != nil {
+	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		sdl.Log("Failed to initialize SDL: %s", sdl.GetError())
 		return false
 	}
@@ -31,8 +31,8 @@ func (e *engine) Init() bool {
 
 	window, err := sdl.CreateWindow(
 		"Soft Engine",
-		sdl.WINDOWPOS_UNDEFINED,
-		sdl.WINDOWPOS_UNDEFINED,
+		sdl.WINDOWPOS_CENTERED,
+		sdl.WINDOWPOS_CENTERED,
 		SCREEN_WIDTH,
 		SCREEN_HEIGHT,
 		sdl.WINDOW_SHOWN)
@@ -52,6 +52,8 @@ func (e *engine) Init() bool {
 	}
 	e.Renderer = renderer
 
+	GetTextureManagerInstance().Load("tree", "assets/tree.png")
+
 	e.isRunning = true
 	return e.isRunning
 }
@@ -67,11 +69,14 @@ func (e *engine) Quit() {
 }
 
 func (e *engine) Update() {
-	sdl.Log("test")
 }
 
 func (e *engine) Render() {
-	e.Renderer.SetDrawColor(124, 218, 254, 255)
+	e.Renderer.SetDrawColor(255, 0, 0, 255)
+	e.Renderer.Clear()
+
+	GetTextureManagerInstance().Draw("tree", 100, 100, 347, 465, sdl.FLIP_NONE)
+
 	e.Renderer.Present()
 }
 
@@ -88,7 +93,7 @@ func (e *engine) IsRunning() bool {
 	return e.isRunning
 }
 
-func GetInstance() *engine {
+func GetEngineInstance() *engine {
 	if e == nil {
 		e = &engine{}
 	}
